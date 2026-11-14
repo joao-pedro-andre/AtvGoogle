@@ -1,4 +1,4 @@
-const { clearSessionCookie } = require("../_lib/session");
+const { clearSessionCookie } = require("../../lib/session");
 
 module.exports = function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
