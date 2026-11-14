@@ -140,5 +140,70 @@ if ("IntersectionObserver" in window) {
   lessonSections.forEach(section => observer.observe(section));
 }
 
+
+const quizForm = document.getElementById("quiz-form");
+if (quizForm) {
+  const answerKey = ["1", "2", "0", "1", "2"];
+  const explanations = [
+    "O Google Identity Services apresenta o fluxo de login e retorna um ID token ao navegador.",
+    "O backend verifica a assinatura e os dados do token para confirmar que ele é válido para a aplicação.",
+    "O campo audience deve corresponder ao Client ID usado pela aplicação.",
+    "HttpOnly impede que scripts executados no navegador acessem diretamente o valor do cookie.",
+    "O logout deve invalidar a sessão no servidor e devolver o usuário à tela de login."
+  ];
+  const progress = document.getElementById("quiz-progress");
+  const result = document.getElementById("quiz-result");
+  const review = document.getElementById("quiz-review");
+  const updateQuizProgress = () => {
+    const answered = answerKey.filter((_, i) => quizForm.querySelector('input[name="q' + i + '"]:checked')).length;
+    progress.textContent = answered + " de 5 respondidas";
+  };
+  quizForm.addEventListener("change", updateQuizProgress);
+  quizForm.addEventListener("submit", event => {
+    event.preventDefault();
+    const unanswered = answerKey.filter((_, i) => !quizForm.querySelector('input[name="q' + i + '"]:checked')).length;
+    if (unanswered) {
+      result.hidden = false;
+      result.className = "quiz-result incomplete";
+      result.textContent = "Faltam responder " + unanswered + " pergunta(s). Complete o quiz para ver sua nota.";
+      return;
+    }
+    let score = 0;
+    const reviewItems = answerKey.map((answer, i) => {
+      const selected = quizForm.querySelector('input[name="q' + i + '"]:checked').value;
+      const correct = selected === answer;
+      if (correct) score++;
+      const question = quizForm.querySelector('[data-question="' + i + '"] legend').textContent.replace(/^\s*\d+\s*/, "");
+      const selectedText = quizForm.querySelector('input[name="q' + i + '"]:checked').parentElement.textContent.trim();
+      const correctText = quizForm.querySelector('input[name="q' + i + '"][value="' + answer + '"]').parentElement.textContent.trim();
+      return '<div class="review-item ' + (correct ? "correct" : "incorrect") + '"><strong>' + (i + 1) + '. ' + question + '</strong><p>Sua resposta: ' + selectedText + '</p>' + (correct ? '<p class="review-status">Resposta correta!</p>' : '<p>Resposta correta: ' + correctText + '</p>') + '<small>' + explanations[i] + '</small></div>';
+    });
+    const percent = score * 20;
+    const message = score === 5 ? "Excelente! Você dominou o conteúdo." : score >= 3 ? "Muito bem! Revise os pontos que errou." : "Continue estudando. Revise o tutorial e tente novamente.";
+    result.hidden = false;
+    result.className = "quiz-result " + (score >= 3 ? "passed" : "needs-review");
+    result.innerHTML = '<div class="quiz-score">' + score + '<small>/5</small></div><div><strong>' + message + '</strong><p>Você acertou ' + score + ' de 5 perguntas (' + percent + '%).</p></div>';
+    review.hidden = false;
+    review.innerHTML = '<h3>Correção das respostas</h3>' + reviewItems.join("");
+    result.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+  const retry = document.createElement("button");
+  retry.type = "button";
+  retry.className = "quiz-retry";
+  retry.textContent = "Refazer quiz";
+  retry.addEventListener("click", () => {
+    quizForm.reset();
+    result.hidden = true;
+    review.hidden = true;
+    progress.textContent = "0 de 5 respondidas";
+    quizForm.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  review.after(retry);
+  retry.hidden = true;
+  const resultObserver = new MutationObserver(() => { retry.hidden = result.hidden; });
+  resultObserver.observe(result, { attributes: true, attributeFilter: ["hidden"] });
+  review.hidden = true;
+}
+
 loadSession();
 initializeGoogle();
