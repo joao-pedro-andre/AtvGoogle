@@ -1,4 +1,4 @@
-const { COOKIE_NAME, readCookie, verifySession } = require("../_lib/session");
+const { COOKIE_NAME, readCookie, verifySession } = require("../../lib/session");
 
 module.exports = function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
