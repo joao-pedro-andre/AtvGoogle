@@ -1,5 +1,5 @@
 const { OAuth2Client } = require("google-auth-library");
-const { createSession, setSessionCookie } = require("../_lib/session");
+const { createSession, setSessionCookie } = require("../../lib/session");
 
 const client = new OAuth2Client();
 
