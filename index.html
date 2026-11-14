@@ -70,46 +70,6 @@
         <div class="progress-wrap"><div><span>SEU GUIA DE ESTUDO</span><strong>7 etapas</strong></div><div class="progress-track"><span></span></div></div>
       </section>
 
-      <section class="implementation-checklist" id="checklist" aria-labelledby="checklist-title">
-        <div class="checklist-heading">
-          <div>
-            <p class="eyebrow">ACOMPANHE SUA IMPLEMENTAÇÃO</p>
-            <h2 id="checklist-title">Meu checklist</h2>
-            <p>Marque cada tarefa conforme concluir. Seu progresso fica salvo neste navegador.</p>
-          </div>
-          <div class="checklist-counter"><strong id="checklist-count">0/12</strong><span>concluídas</span></div>
-        </div>
-        <div class="checklist-progress" role="progressbar" aria-label="Progresso da implementação" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="checklist-progress"><span id="checklist-progress-fill"></span></div>
-        <div class="checklist-groups">
-          <div class="checklist-group">
-            <h3>01 · Configuração</h3>
-            <label class="checklist-item"><input type="checkbox" data-check="oauth-project"><span><strong>Criar um projeto no Google Cloud</strong><small>Selecionar ou criar o projeto que será usado na autenticação.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="oauth-consent"><span><strong>Configurar a tela de consentimento OAuth</strong><small>Definir o nome do aplicativo e as informações solicitadas.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="oauth-client"><span><strong>Criar o Client ID OAuth para aplicativo Web</strong><small>Adicionar as origens JavaScript autorizadas, incluindo o domínio publicado.</small></span></label>
-          </div>
-          <div class="checklist-group">
-            <h3>02 · Frontend e backend</h3>
-            <label class="checklist-item"><input type="checkbox" data-check="gis-library"><span><strong>Carregar o Google Identity Services</strong><small>Adicionar a biblioteca oficial e renderizar o botão de login.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="send-token"><span><strong>Enviar o ID token para a API</strong><small>Encaminhar a credencial recebida pelo frontend usando HTTPS.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="verify-token"><span><strong>Validar o token no backend</strong><small>Verificar assinatura, validade, audiência e e-mail verificado.</small></span></label>
-          </div>
-          <div class="checklist-group">
-            <h3>03 · Sessão e segurança</h3>
-            <label class="checklist-item"><input type="checkbox" data-check="session-cookie"><span><strong>Criar o cookie de sessão seguro</strong><small>Configurar HttpOnly, Secure, SameSite, Path e expiração.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="session-check"><span><strong>Implementar a verificação da sessão</strong><small>Consultar a rota /api/auth/me para confirmar o usuário autenticado.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="logout"><span><strong>Implementar o logout</strong><small>Encerrar a sessão no servidor e limpar o cookie.</small></span></label>
-          </div>
-          <div class="checklist-group">
-            <h3>04 · Publicação e testes</h3>
-            <label class="checklist-item"><input type="checkbox" data-check="env-vars"><span><strong>Configurar as variáveis de ambiente</strong><small>Adicionar GOOGLE_CLIENT_ID e SESSION_SECRET na hospedagem.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="deploy"><span><strong>Publicar a aplicação</strong><small>Enviar o projeto ao GitHub e confirmar o deploy na Vercel.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="test-login"><span><strong>Testar login, atualização e logout</strong><small>Confirmar que a sessão continua válida ao atualizar a página.</small></span></label>
-            <label class="checklist-item"><input type="checkbox" data-check="test-security"><span><strong>Testar acesso sem sessão e erros</strong><small>Verificar se usuários não autenticados não acessam a área protegida.</small></span></label>
-          </div>
-        </div>
-        <div class="checklist-footer"><span id="checklist-message">Comece marcando as tarefas que você já concluiu.</span><button type="button" id="checklist-reset" class="checklist-reset">Limpar checklist</button></div>
-      </section>
-
       <div class="learning-layout">
         <aside class="lesson-sidebar">
           <p class="sidebar-label">CONTEÚDO</p>
@@ -286,6 +246,47 @@ async function validarToken(idToken) {
           <footer class="lesson-footer"><span>GOOGLE · MATERIAL DE ESTUDO</span><a href="#introducao">Voltar ao início ↑</a></footer>
         </article>
       </div>
+
+      <section class="implementation-checklist" id="checklist" aria-labelledby="checklist-title">
+        <div class="checklist-heading">
+          <div>
+            <p class="eyebrow">ACOMPANHE SUA IMPLEMENTAÇÃO</p>
+            <h2 id="checklist-title">Meu checklist</h2>
+            <p>Marque cada tarefa conforme concluir. Seu progresso fica salvo neste navegador.</p>
+          </div>
+          <div class="checklist-counter"><strong id="checklist-count">0/12</strong><span>concluídas</span></div>
+        </div>
+        <div class="checklist-progress" role="progressbar" aria-label="Progresso da implementação" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="checklist-progress"><span id="checklist-progress-fill"></span></div>
+        <div class="checklist-groups">
+          <div class="checklist-group">
+            <h3>01 · Configuração</h3>
+            <label class="checklist-item"><input type="checkbox" data-check="oauth-project"><span><strong>Criar um projeto no Google Cloud</strong><small>Selecionar ou criar o projeto que será usado na autenticação.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="oauth-consent"><span><strong>Configurar a tela de consentimento OAuth</strong><small>Definir o nome do aplicativo e as informações solicitadas.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="oauth-client"><span><strong>Criar o Client ID OAuth para aplicativo Web</strong><small>Adicionar as origens JavaScript autorizadas, incluindo o domínio publicado.</small></span></label>
+          </div>
+          <div class="checklist-group">
+            <h3>02 · Frontend e backend</h3>
+            <label class="checklist-item"><input type="checkbox" data-check="gis-library"><span><strong>Carregar o Google Identity Services</strong><small>Adicionar a biblioteca oficial e renderizar o botão de login.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="send-token"><span><strong>Enviar o ID token para a API</strong><small>Encaminhar a credencial recebida pelo frontend usando HTTPS.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="verify-token"><span><strong>Validar o token no backend</strong><small>Verificar assinatura, validade, audiência e e-mail verificado.</small></span></label>
+          </div>
+          <div class="checklist-group">
+            <h3>03 · Sessão e segurança</h3>
+            <label class="checklist-item"><input type="checkbox" data-check="session-cookie"><span><strong>Criar o cookie de sessão seguro</strong><small>Configurar HttpOnly, Secure, SameSite, Path e expiração.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="session-check"><span><strong>Implementar a verificação da sessão</strong><small>Consultar a rota /api/auth/me para confirmar o usuário autenticado.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="logout"><span><strong>Implementar o logout</strong><small>Encerrar a sessão no servidor e limpar o cookie.</small></span></label>
+          </div>
+          <div class="checklist-group">
+            <h3>04 · Publicação e testes</h3>
+            <label class="checklist-item"><input type="checkbox" data-check="env-vars"><span><strong>Configurar as variáveis de ambiente</strong><small>Adicionar GOOGLE_CLIENT_ID e SESSION_SECRET na hospedagem.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="deploy"><span><strong>Publicar a aplicação</strong><small>Enviar o projeto ao GitHub e confirmar o deploy na Vercel.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="test-login"><span><strong>Testar login, atualização e logout</strong><small>Confirmar que a sessão continua válida ao atualizar a página.</small></span></label>
+            <label class="checklist-item"><input type="checkbox" data-check="test-security"><span><strong>Testar acesso sem sessão e erros</strong><small>Verificar se usuários não autenticados não acessam a área protegida.</small></span></label>
+          </div>
+        </div>
+        <div class="checklist-footer"><span id="checklist-message">Comece marcando as tarefas que você já concluiu.</span><button type="button" id="checklist-reset" class="checklist-reset">Limpar checklist</button></div>
+      </section>
+
     </section>
 
     <footer id="main-footer"><span>GOOGLE · PROJETO ACADÊMICO</span><span>Node.js · Google Identity · Vercel</span></footer>
