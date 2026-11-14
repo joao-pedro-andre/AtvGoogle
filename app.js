@@ -205,5 +205,53 @@ if (quizForm) {
   review.hidden = true;
 }
 
+
+/* Checklist de implementação: progresso salvo localmente neste navegador. */
+const checklist = document.getElementById("checklist");
+if (checklist) {
+  const storageKey = "atvgoogle-implementation-checklist-v1";
+  const checks = [...checklist.querySelectorAll('input[type="checkbox"][data-check]')];
+  const count = document.getElementById("checklist-count");
+  const fill = document.getElementById("checklist-progress-fill");
+  const progressBar = document.getElementById("checklist-progress");
+  const message = document.getElementById("checklist-message");
+
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(storageKey) || "{}") || {}; } catch { saved = {}; }
+
+  checks.forEach(input => { input.checked = saved[input.dataset.check] === true; });
+
+  function updateChecklist(save = true) {
+    const completed = checks.filter(input => input.checked).length;
+    const total = checks.length;
+    const percent = Math.round((completed / total) * 100);
+    count.textContent = completed + "/" + total;
+    fill.style.width = percent + "%";
+    progressBar.setAttribute("aria-valuenow", String(completed));
+    message.textContent = completed === total
+      ? "Tudo concluído! Sua implementação está completa. 🎉"
+      : completed === 0
+        ? "Comece marcando as tarefas que você já concluiu."
+        : percent + "% concluído. Continue avançando no seu ritmo.";
+    checklist.classList.toggle("is-complete", completed === total);
+    if (save) {
+      const state = {};
+      checks.forEach(input => { state[input.dataset.check] = input.checked; });
+      try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch {
+        message.textContent = "Não foi possível salvar neste navegador. Verifique as configurações de armazenamento.";
+      }
+    }
+  }
+
+  checks.forEach(input => input.addEventListener("change", () => updateChecklist()));
+  document.getElementById("checklist-reset").addEventListener("click", () => {
+    if (!checks.some(input => input.checked)) return;
+    if (!window.confirm("Deseja desmarcar todas as tarefas do checklist?")) return;
+    checks.forEach(input => { input.checked = false; });
+    updateChecklist();
+  });
+  updateChecklist(false);
+}
+
 loadSession();
 initializeGoogle();
