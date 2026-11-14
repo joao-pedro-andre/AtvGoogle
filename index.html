@@ -80,6 +80,7 @@
           <a class="lesson-link" href="#backend"><span>05</span> Backend</a>
           <a class="lesson-link" href="#sessao"><span>06</span> Sessão segura</a>
           <a class="lesson-link" href="#testes"><span>07</span> Testes e deploy</a>
+          <a class="lesson-link" href="#quiz"><span>08</span> Quiz final</a>
           <div class="sidebar-tip"><span>✦ DICA</span><p>Leia na ordem e copie os exemplos para estudar. Os trechos são ilustrativos e devem ser adaptados ao seu projeto.</p></div>
         </aside>
 
@@ -198,6 +199,48 @@ async function validarToken(idToken) {
             </ul>
             <div class="resource-card"><div><span class="resource-kicker">DOCUMENTAÇÃO OFICIAL</span><strong>Google Identity Services</strong><p>Consulte a documentação para conhecer opções, parâmetros e boas práticas atualizadas.</p></div><a href="https://developers.google.com/identity/gsi/web" target="_blank" rel="noreferrer">Acessar documentação ↗</a></div>
             <div class="finish-card"><span>✓</span><div><strong>Você chegou ao final do tutorial!</strong><p>Agora você conhece o caminho completo: configuração, autenticação, validação e sessão.</p></div></div>
+          </section>
+
+          <section class="lesson-section quiz-section" id="quiz">
+            <div class="section-overline">DESAFIO FINAL · AVALIE SEU APRENDIZADO</div>
+            <h2>Quiz: teste seus conhecimentos</h2>
+            <p>Responda às cinco perguntas sobre o conteúdo estudado. No final, você verá sua pontuação e poderá revisar as respostas.</p>
+            <div class="quiz-meta"><span>5 perguntas</span><span>1 ponto por acerto</span><span>Nota máxima: 5</span></div>
+            <form id="quiz-form">
+              <fieldset class="quiz-question" data-question="0">
+                <legend><span>01</span> Qual é a função do Google Identity Services neste projeto?</legend>
+                <label><input type="radio" name="q0" value="0"><span>Armazenar as senhas dos usuários.</span></label>
+                <label><input type="radio" name="q0" value="1"><span>Exibir o fluxo de login e fornecer uma credencial após a autenticação.</span></label>
+                <label><input type="radio" name="q0" value="2"><span>Criar diretamente as tabelas do banco de dados.</span></label>
+              </fieldset>
+              <fieldset class="quiz-question" data-question="1">
+                <legend><span>02</span> Por que o backend precisa validar o ID token?</legend>
+                <label><input type="radio" name="q1" value="0"><span>Para mudar a aparência do botão de login.</span></label>
+                <label><input type="radio" name="q1" value="1"><span>Para salvar o token no armazenamento local do navegador.</span></label>
+                <label><input type="radio" name="q1" value="2"><span>Para confirmar que a credencial é válida e destinada à aplicação.</span></label>
+              </fieldset>
+              <fieldset class="quiz-question" data-question="2">
+                <legend><span>03</span> Qual informação deve ser usada como audiência na verificação do token?</legend>
+                <label><input type="radio" name="q2" value="0"><span>O Client ID da aplicação.</span></label>
+                <label><input type="radio" name="q2" value="1"><span>O nome do usuário.</span></label>
+                <label><input type="radio" name="q2" value="2"><span>O endereço IP do visitante.</span></label>
+              </fieldset>
+              <fieldset class="quiz-question" data-question="3">
+                <legend><span>04</span> O que a propriedade HttpOnly faz em um cookie?</legend>
+                <label><input type="radio" name="q3" value="0"><span>Faz o cookie durar para sempre.</span></label>
+                <label><input type="radio" name="q3" value="1"><span>Impede que JavaScript do navegador leia diretamente o cookie.</span></label>
+                <label><input type="radio" name="q3" value="2"><span>Dispensa a validação da sessão no servidor.</span></label>
+              </fieldset>
+              <fieldset class="quiz-question" data-question="4">
+                <legend><span>05</span> O que deve acontecer quando o usuário clica em “Sair da conta”?</legend>
+                <label><input type="radio" name="q4" value="0"><span>Apenas esconder o nome do usuário na tela.</span></label>
+                <label><input type="radio" name="q4" value="1"><span>Apagar o Client ID do projeto Google Cloud.</span></label>
+                <label><input type="radio" name="q4" value="2"><span>Encerrar a sessão no servidor e retornar à tela de login.</span></label>
+              </fieldset>
+              <div class="quiz-actions"><button class="quiz-submit" type="submit">Corrigir minhas respostas</button><span id="quiz-progress">0 de 5 respondidas</span></div>
+            </form>
+            <div id="quiz-result" class="quiz-result" role="status" aria-live="polite" hidden></div>
+            <div class="quiz-review" id="quiz-review" hidden></div>
           </section>
           <footer class="lesson-footer"><span>GOOGLE · MATERIAL DE ESTUDO</span><a href="#introducao">Voltar ao início ↑</a></footer>
         </article>
