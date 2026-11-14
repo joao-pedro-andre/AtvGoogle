@@ -1,8 +1,6 @@
 const notice = document.getElementById("notice");
-const googleArea = document.getElementById("google-area");
-const userArea = document.getElementById("user-area");
-const cardTitle = document.getElementById("card-title");
-const cardDescription = document.getElementById("card-description");
+const loginView = document.getElementById("login-view");
+const tutorialView = document.getElementById("tutorial-view");
 
 function showNotice(message, type = "") {
   notice.textContent = message;
@@ -12,16 +10,22 @@ function showNotice(message, type = "") {
 function hideNotice() { notice.hidden = true; }
 
 function showUser(user) {
-  googleArea.hidden = true;
-  userArea.hidden = false;
-  cardTitle.textContent = "Acesso confirmado";
-  cardDescription.textContent = "Sua identidade foi validada pelo servidor e uma sessão segura foi criada.";
+  loginView.hidden = true;
+  tutorialView.hidden = false;
+  document.getElementById("top-status").textContent = "ÁREA DO ALUNO";
   document.getElementById("user-name").textContent = user.name || "Usuário Google";
-  document.getElementById("user-email").textContent = user.email;
+  document.getElementById("user-email").textContent = user.email || "";
   const picture = document.getElementById("user-picture");
   picture.src = user.picture || "https://www.gravatar.com/avatar/?d=mp";
   picture.alt = "Foto de " + (user.name || "usuário");
-  hideNotice();
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function showLogin() {
+  tutorialView.hidden = true;
+  loginView.hidden = false;
+  document.getElementById("top-status").textContent = "AUTENTICAÇÃO SEGURA";
+  window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 async function requestSession(credential) {
@@ -37,7 +41,6 @@ async function requestSession(credential) {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Falha ao autenticar.");
     showUser(data.user);
-    showNotice("Login realizado. A sessão segura está ativa neste navegador.", "success");
   } catch (error) {
     showNotice(error.message || "Não foi possível concluir o login.", "error");
   }
@@ -45,7 +48,7 @@ async function requestSession(credential) {
 
 async function loadSession() {
   try {
-    const response = await fetch("/api/auth/me", { credentials: "same-origin" });
+    const response = await fetch("/api/auth/me", { credentials: "same-origin", cache: "no-store" });
     if (!response.ok) return;
     const data = await response.json();
     if (data.authenticated && data.user) showUser(data.user);
@@ -99,17 +102,43 @@ async function initializeGoogle() {
 
 document.getElementById("logout-button").addEventListener("click", async () => {
   try {
-    await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" });
-    userArea.hidden = true;
-    googleArea.hidden = false;
-    cardTitle.textContent = "Boas-vindas";
-    cardDescription.textContent = "Entre com sua conta Google para continuar com segurança.";
-    hideNotice();
+    const response = await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" });
+    if (!response.ok) throw new Error("Falha ao encerrar sessão.");
+    showLogin();
     if (window.google?.accounts?.id) google.accounts.id.disableAutoSelect();
   } catch {
-    showNotice("Não foi possível encerrar a sessão. Tente novamente.", "error");
+    // Mantém a área aberta se o servidor não confirmar o logout.
+    alert("Não foi possível encerrar a sessão. Tente novamente.");
   }
 });
+
+document.querySelectorAll(".copy-button").forEach(button => {
+  button.addEventListener("click", async () => {
+    const code = button.closest(".code-card").querySelector("pre code").textContent;
+    try {
+      await navigator.clipboard.writeText(code);
+      const original = button.textContent;
+      button.textContent = "Copiado!";
+      setTimeout(() => { button.textContent = original; }, 1600);
+    } catch {
+      button.textContent = "Não foi possível copiar";
+      setTimeout(() => { button.textContent = "Copiar código"; }, 1800);
+    }
+  });
+});
+
+const lessonLinks = [...document.querySelectorAll(".lesson-link")];
+const lessonSections = lessonLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        lessonLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id));
+      }
+    });
+  }, { rootMargin: "-18% 0px -68% 0px" });
+  lessonSections.forEach(section => observer.observe(section));
+}
 
 loadSession();
 initializeGoogle();
