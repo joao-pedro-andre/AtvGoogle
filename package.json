@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Atividade de autenticação com Google Identity Services, OAuth 2.0 e Node.js",
-  "engines": { "node": ">=20" },
+  "engines": { "node": "20.x" },
   "dependencies": {
     "google-auth-library": "^9.15.1"
   },
