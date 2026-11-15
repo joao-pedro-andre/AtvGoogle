@@ -61,8 +61,12 @@ async function initializeGoogle() {
   try {
     const response = await fetch("/api/config", { cache: "no-store" });
     const config = await response.json();
-    if (!config.configured || !config.clientId) {
-      showNotice("Configuração pendente: adicione GOOGLE_CLIENT_ID e SESSION_SECRET nas variáveis de ambiente da Vercel. Consulte o README.", "error");
+    if (!config.clientConfigured || !config.clientId) {
+      showNotice("O Client ID do Google não está configurado na Vercel.", "error");
+      return;
+    }
+    if (!config.sessionConfigured) {
+      showNotice("A sessão do site não está configurada corretamente. Verifique SESSION_SECRET nas variáveis da Vercel.", "error");
       return;
     }
 
